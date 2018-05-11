@@ -9,8 +9,10 @@ table { border-spacing:0; border-collapse:collapse; }
 td, th { text-align:left }
 
 /* structure */
-.container { margin:40px auto; width:600px; padding:30px; }
-.contextual { float:right; margin-top:10px; }
+.container { margin:40px auto; width:600px; }
+.container .header { padding: 8px 14px; }
+.container .main { padding: 30px; }
+.contextual { float:right; }
 
 /* styling */
 body { background-color:#FFFFFA; }
@@ -18,7 +20,9 @@ a, a:hover, a:visited, a:active { color:#C2185B; }
 pre { padding:4px; background-color:#EEE; border:1px solid #666; }
 table { width:100%; }
 td, th { background-color:#FFFFFF; padding:6px 10px; border:1px solid #bbb; }
-.container { background-color:#FFCCBC; border:1px solid #E64A19; }
+.container .header { background-color:#E64A19; color:#fff; font-size:16px; }
+.container .header a,.container .header a:hover,.container .header a:visited,.container .header a:active { color:#FFF; }
+.container .main { background-color:#FFCCBC; border:1px solid #E64A19; }
 .form-container p { margin:25px 5px 5px; }
 .form-container label { display:block; color:#535353; text-transform:uppercase; font-weight:bold; }
 .form-container input[type=text] { display:block; padding:4px 8px; width:100%; font-size:24px; border:1px solid #888; border-radius:2px; }

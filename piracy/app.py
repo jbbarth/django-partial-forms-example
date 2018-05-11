@@ -1,5 +1,6 @@
 from django_micro import configure, route, run
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -14,7 +15,16 @@ DATABASES = {
 }
 DEBUG = True
 INSTALLED_APPS = ["django.contrib.staticfiles"]
-TEMPLATE_DIRS = ["templates"]
+MIDDLEWARE = ["middlewares.DummyAuthMiddleware"]
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": ["templates"],
+        "OPTIONS": {
+            "context_processors": ["context_processors.set_user"],
+        },
+    },
+]
 STATIC_URL = "/static/"
 ALLOWED_HOSTS = ["*"]
 configure(locals())
@@ -28,6 +38,18 @@ from .models import Pirate  # noqa: E402
 @route("favicon.ico", name="favicon")
 def favicon(request):
     return HttpResponse("")
+
+
+# GET /login : log in as username
+@route("login", name="login")
+def login(request):
+    response = redirect("pirate_list")
+    user = request.GET.get("user")
+    if user:
+        response.set_cookie("piracy_user", request.GET.get("user"))
+    else:
+        response.delete_cookie("piracy_user")
+    return response
 
 
 # GET / : list pirates
