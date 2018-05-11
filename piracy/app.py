@@ -73,7 +73,12 @@ class PirateCreate(CreateView):
 class PirateUpdate(UpdateView):
     model = Pirate
     success_url = reverse_lazy("pirate_list")
-    fields = ["name", "is_captain"]
+
+    def dispatch(self, request, *args, **kwargs):
+        self.fields = ["name"]
+        if self.request.user["role"] == "admin":
+            self.fields.append("is_captain")
+        return super().dispatch(request, *args, **kwargs)
 
 
 # GET /delete/:id : display delete confirmation

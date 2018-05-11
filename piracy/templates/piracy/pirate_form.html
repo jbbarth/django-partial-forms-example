@@ -8,8 +8,22 @@
   {% endif %}
   <a href=/>&larr; back to list</a>
   <form method="post" class=form-container>
-	  {% csrf_token %}
-    {{ form.as_p }}
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <p>
+      {{ form.name.errors }}
+      <label for="{{ form.name.id_for_label }}">Name:</label>
+      {{ form.name }}
+    </p>
+    <p>
+      {{ form.is_captain.errors }}
+      <label for="{{ form.is_captain.id_for_label }}">Is Captain?:</label>
+      {% if user.role == "admin" %}
+        <input type=checkbox name="is_captain" id="{{ form.is_captain.id_for_label }}">
+      {% else %}
+        {{ object.is_captain|yesno:"Yes,No" }} <i>(must be admin to edit)</i>
+      {% endif %}
+    </p>
     <p style="text-align:center;">
       <input type="submit" value="Submit" />
     </p>
