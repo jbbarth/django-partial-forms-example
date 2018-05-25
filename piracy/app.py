@@ -32,6 +32,7 @@ configure(locals())
 
 # Local Django classes
 from .models import Pirate  # noqa: E402
+from .forms import PirateForm  # noqa: E402
 
 
 # GET /favicon.ico
@@ -63,8 +64,14 @@ class PirateList(ListView):
 @route("create", name="pirate_create")
 class PirateCreate(CreateView):
     model = Pirate
+    form_class = PirateForm
     success_url = reverse_lazy("pirate_list")
-    fields = ["name", "is_captain"]
+
+    def get_form_kwargs(self):
+        return dict(
+            super(self.__class__, self).get_form_kwargs(),
+            user=self.request.user,
+        )
 
 
 # GET /update/:id : display update form
@@ -72,13 +79,14 @@ class PirateCreate(CreateView):
 @route("update/<int:pk>", name="pirate_update")
 class PirateUpdate(UpdateView):
     model = Pirate
+    form_class = PirateForm
     success_url = reverse_lazy("pirate_list")
 
-    def dispatch(self, request, *args, **kwargs):
-        self.fields = ["name"]
-        if self.request.user["role"] == "admin":
-            self.fields.append("is_captain")
-        return super().dispatch(request, *args, **kwargs)
+    def get_form_kwargs(self):
+        return dict(
+            super(self.__class__, self).get_form_kwargs(),
+            user=self.request.user,
+        )
 
 
 # GET /delete/:id : display delete confirmation
