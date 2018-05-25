@@ -10,8 +10,7 @@ class PirateForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user")
-        self.fields = ["name"]
-        if user["role"] == "admin":
-            self.fields.append("is_captain")
-
         super(PirateForm, self).__init__(*args, **kwargs)
+
+        if user["name"] != "Alice":
+            del self.fields["is_captain"]

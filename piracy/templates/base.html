@@ -8,18 +8,18 @@
     <div class=container>
       <div class=header>
         <div class=contextual>
-          {% if user.username %}
+          {% if user.name %}
             <a href=/login>Logout</a>
           {% else %}
             Log as:
-            <a href=/login?user=Alice>Alice (admin)</a>
+            <a href=/login?user=Alice>Alice</a>
             |
-            <a href=/login?user=Bob>Bob (user)</a>
+            <a href=/login?user=Bob>Bob</a>
           {% endif %}
         </div>
         Current user:
-        {% if user.username %}
-          {{ user.username }} ({{ user.role }})
+        {% if user.name %}
+          <b>{{ user.name }}</b>
         {% else %}
           -
         {% endif %}
