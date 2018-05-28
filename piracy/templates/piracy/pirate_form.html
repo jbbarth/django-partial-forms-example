@@ -19,6 +19,7 @@
       {{ form.is_captain.errors }}
       <label for="{{ form.is_captain.id_for_label }}">Is Captain?:</label>
       {% if user.name == "Alice" %}
+        <input type="hidden" name="is_captain" value="false">
         <input type=checkbox name="is_captain" id="{{ form.is_captain.id_for_label }}" {% if object.is_captain %}checked{% endif %}>
       {% else %}
         {{ object.is_captain|yesno:"Yes,No" }} <i>(must be admin to edit)</i>

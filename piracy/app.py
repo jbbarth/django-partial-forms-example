@@ -67,12 +67,6 @@ class PirateCreate(CreateView):
     form_class = PirateForm
     success_url = reverse_lazy("pirate_list")
 
-    def get_form_kwargs(self):
-        return dict(
-            super(self.__class__, self).get_form_kwargs(),
-            user=self.request.user,
-        )
-
 
 # GET /update/:id : display update form
 # POST /update/:id : update pirate
@@ -81,12 +75,6 @@ class PirateUpdate(UpdateView):
     model = Pirate
     form_class = PirateForm
     success_url = reverse_lazy("pirate_list")
-
-    def get_form_kwargs(self):
-        return dict(
-            super(self.__class__, self).get_form_kwargs(),
-            user=self.request.user,
-        )
 
 
 # GET /delete/:id : display delete confirmation
